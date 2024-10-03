@@ -187,7 +187,7 @@ bins = [0, 10, 20, 30, 40]
 labels = ['0-10°C', '11-20°C', '21-30°C', '31-40°C']
 hour_df['temp_category'] = pd.cut(hour_df['temperature'], bins=bins, labels=labels, include_lowest=True)
 
-temp_rentals = hour_df.groupby('temp_category')['count_total'].mean().round().astype(int).reset_index()
+temp_rentals = hour_df.groupby('temp_category')['count_total'].mean().reset_index()
 st.dataframe(temp_rentals)
 
 # Visualisasi penyewaan sepeda berdasarkan kategori temperatur
