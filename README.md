@@ -1,31 +1,33 @@
-Berikut adalah file `README.md` yang menjelaskan outline program dan cara menjalankan program berdasarkan kode *Streamlit* yang telah diberikan:
+*Bike Sharing Data Analysis
+
+**Zeka Emo
+**zeka.emo30@gmail.com
 
 ```markdown
-# Analisis Data Bike Sharing Menggunakan Streamlit
+# Project Description
 
-Proyek ini adalah aplikasi web untuk analisis data **Bike Sharing** yang dibangun menggunakan **Streamlit**. Aplikasi ini menganalisis data penyewaan sepeda dan memberikan wawasan mengenai hubungan antara kondisi cuaca, waktu, dan pola penyewaan sepeda.
+Proyek ini bertujuan untuk menganalisis dataset penyewaan sepeda guna memperoleh wawasan tentang perilaku pengguna, seperti waktu penyewaan terbanyak, pengaruh cuaca, serta perbedaan antara pengguna kasual dan terdaftar. Analisis dilakukan dengan menggunakan Python dan Pandas, sementara visualisasinya dibuat menggunakan Streamlit.
 
 ## Outline Program
 
-### Tujuan
-Program ini bertujuan untuk menjawab beberapa pertanyaan analisis data berikut:
+### Program ini bertujuan untuk menjawab beberapa pertanyaan analisis data berikut:
 1. Bagaimana pengaruh cuaca terhadap jumlah penyewaan sepeda?
 2. Apakah terdapat perbedaan kebiasaan penyewaan sepeda pada hari libur dibandingkan dengan hari biasa?
 3. Pada pukul berapa sepeda paling banyak disewa dalam sehari?
 4. Pada hari apa dalam seminggu sepeda paling banyak disewa?
 5. Bagaimana pengaruh suhu udara yang panas atau dingin terhadap jumlah sepeda yang disewa?
 
-### Fitur Utama
-1. **Data Wrangling**: 
+
+### Data Wrangling: 
    - Mengubah tipe data, membersihkan data, dan melakukan pemrosesan awal dataset.
    
-2. **Exploratory Data Analysis (EDA)**:
+### Exploratory Data Analysis (EDA)
    - Analisis pola penyewaan sepeda berdasarkan cuaca, waktu, hari libur, dan suhu udara.
 
-3. **Visualisasi**:
+### Visualizing Data
    - Menampilkan grafik bar dan garis untuk menunjukkan hubungan antara variabel-variabel yang dianalisis.
 
-4. **Kesimpulan**:
+### Drawing Conclusions
    - Menyajikan kesimpulan dari hasil analisis data.
 
 ### Dataset yang Digunakan
@@ -42,21 +44,39 @@ Program ini bertujuan untuk menjawab beberapa pertanyaan analisis data berikut:
   ```
 
 ### Langkah Menjalankan Program
-1. Clone repositori ini atau unduh file program ke komputer Anda.
-2. Pastikan file dataset (`day.csv` dan `hour.csv`) berada di direktori yang sama dengan file kode program.
-3. Buka terminal atau command prompt, navigasikan ke direktori di mana file program disimpan.
-4. Jalankan perintah berikut untuk memulai aplikasi:
-   ```bash
-   streamlit run bike_sharing_analysis.py
-   ```
-5. Aplikasi *Streamlit* akan terbuka di browser web Anda, menampilkan antarmuka dengan hasil analisis data, visualisasi, dan kesimpulan.
+#### Setup Environment - Anaconda
+```
+conda create --name main-ds python=3.9
+conda activate main-ds
+pip install -r requirements.txt
+```
+
+#### Setup Environment - Shell/Terminal
+```
+mkdir proyek_analisis_data
+cd proyek_analisis_data
+pipenv install
+pipenv shell
+pip install -r requirements.txt
+```
+
+#### Run steamlit app
+```
+streamlit run dashboard.py
+```
 
 ### Struktur Direktori
 ```
-├── bike_sharing_analysis.py
-├── day.csv
-├── hour.csv
-├── README.md
+├───dashboard
+| ├───main_data.csv
+| └───dashboard.py
+├───data
+| ├───data_1.csv
+| └───data_2.csv
+├───bike_sharing.ipynb
+├───README.md
+└───requirements.txt
+└───url.txt
 ```
 
 ## Visualisasi dan Analisis
@@ -71,7 +91,3 @@ Pada akhir program, aplikasi menyajikan kesimpulan berdasarkan hasil analisis, t
 - Hari Kamis dan pukul 17.00 menjadi waktu dan hari dengan jumlah penyewaan terbanyak.
 - Temperatur yang panas (31-40°C) memiliki korelasi positif terhadap penyewaan sepeda.
 
-Selamat menjalankan program dan semoga bermanfaat!
-```
-
-File README.md ini memuat deskripsi lengkap mengenai tujuan program, fitur utama, cara menjalankan program, serta struktur direktori. Anda dapat menyesuaikan beberapa bagian jika diperlukan sesuai dengan proyek Anda.
