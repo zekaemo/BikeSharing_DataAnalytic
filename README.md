@@ -1,9 +1,8 @@
-*Bike Sharing Data Analysis
+# Bike Sharing Data Analysis
 
-**Zeka Emo
-**zeka.emo30@gmail.com
+**Nama**: Zeka Emo
+**Email**: zeka.emo30@gmail.com 
 
-```markdown
 # Project Description
 
 Proyek ini bertujuan untuk menganalisis dataset penyewaan sepeda guna memperoleh wawasan tentang perilaku pengguna, seperti waktu penyewaan terbanyak, pengaruh cuaca, serta perbedaan antara pengguna kasual dan terdaftar. Analisis dilakukan dengan menggunakan Python dan Pandas, sementara visualisasinya dibuat menggunakan Streamlit.
