@@ -1,6 +1,7 @@
 # Bike Sharing Data Analysis
 
 **Nama**: Zeka Emo
+
 **Email**: zeka.emo30@gmail.com 
 
 # Project Description
