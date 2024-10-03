@@ -14,8 +14,8 @@ st.markdown("""
 
 # Data Loading
 st.markdown('## Data Loading & Wrangling')
-day_df = pd.read_csv('day.csv')
-hour_df = pd.read_csv('hour.csv')
+day_df = pd.read_csv('dashboard/day.csv')
+hour_df = pd.read_csv('dashboard/hour.csv')
 
 st.write('Tabel day_df:')
 st.dataframe(day_df.head())
