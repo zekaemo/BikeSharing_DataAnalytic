@@ -66,10 +66,10 @@ st.markdown('### Apakah ada perbedaan kategori peminjam saat liburan?')
 holiday_data = hour_df[hour_df['holiday'] == 1]
 no_holiday_data = hour_df[hour_df['holiday'] == 0]
 
-registered_holiday = holiday_data['registered'].mean()
-casual_holiday = holiday_data['casual'].mean()
-registered_no_holiday = no_holiday_data['registered'].mean()
-casual_no_holiday = no_holiday_data['casual'].mean()
+registered_holiday = holiday_data['registered'].mean().round().astype(int)
+casual_holiday = holiday_data['casual'].mean().round().astype(int)
+registered_no_holiday = no_holiday_data['registered'].mean().round().astype(int)
+casual_no_holiday = no_holiday_data['casual'].mean().round().astype(int)
 
 st.write(f'Rata-rata pengguna terdaftar saat liburan: {registered_holiday:.2f}')
 st.write(f'Rata-rata pengguna casual saat liburan: {casual_holiday:.2f}')
@@ -94,7 +94,7 @@ st.pyplot(fig)
 
 # Analisis 3: Peminjaman Sepeda Berdasarkan Jam
 st.markdown('### Pada jam berapa sepeda paling banyak dipinjam?')
-time_rents = hour_df.groupby('hr')['cnt'].mean().reset_index().sort_values(by='cnt', ascending=False)
+time_rents = hour_df.groupby('hr')['cnt'].mean().round().astype(int).reset_index().sort_values(by='cnt', ascending=False)
 st.write(time_rents)
 
 # Visualisasi
@@ -109,7 +109,7 @@ st.pyplot()
 
 # Analisis 4: Peminjaman Sepeda Berdasarkan Hari dalam Seminggu
 st.markdown('### Pada hari apa sepeda paling banyak dipinjam?')
-day_rents = hour_df.groupby('weekday')['cnt'].mean().reset_index().sort_values(by='cnt', ascending=False)
+day_rents = hour_df.groupby('weekday')['cnt'].mean().round().astype(int).reset_index().sort_values(by='cnt', ascending=False)
 st.write(day_rents)
 
 # Visualisasi
@@ -126,7 +126,7 @@ st.markdown('### Bagaimana pengaruh suhu udara terhadap jumlah sepeda yang dipin
 bins = [0, 10, 20, 30, 40]
 labels = ['0-10°C', '11-20°C', '21-30°C', '31-40°C'] 
 hour_df['temp_category'] = pd.cut(hour_df['temp'], bins=bins, labels=labels, include_lowest=True)
-temp_rentals = hour_df.groupby('temp_category')['cnt'].mean().reset_index()
+temp_rentals = hour_df.groupby('temp_category')['cnt'].mean().round().astype(int).reset_index()
 st.write(temp_rentals)
 
 # Visualisasi
