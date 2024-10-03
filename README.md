@@ -85,9 +85,3 @@ Setiap analisis dilengkapi dengan visualisasi, seperti grafik batang dan garis, 
 - **Waktu**: Waktu paling sibuk untuk penyewaan sepeda.
 - **Hari libur vs hari biasa**: Perbedaan perilaku pengguna selama liburan.
 
-## Kesimpulan
-Pada akhir program, aplikasi menyajikan kesimpulan berdasarkan hasil analisis, termasuk:
-- Cuaca berawan (*cloudy*) memiliki jumlah penyewaan sepeda tertinggi.
-- Hari Kamis dan pukul 17.00 menjadi waktu dan hari dengan jumlah penyewaan terbanyak.
-- Temperatur yang panas (31-40°C) memiliki korelasi positif terhadap penyewaan sepeda.
-
