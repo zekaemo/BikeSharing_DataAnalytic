@@ -92,6 +92,53 @@ ax.set_xticklabels(categories)
 ax.legend()
 st.pyplot(fig)
 
+# Analisis 3: Peminjaman Sepeda Berdasarkan Jam
+st.markdown('### Pada jam berapa sepeda paling banyak dipinjam?')
+time_rents = hour_df.groupby('hr')['cnt'].mean().reset_index().sort_values(by='cnt', ascending=False)
+st.write(time_rents)
+
+# Visualisasi
+st.markdown('Visualisasi Penyewaan Berdasarkan Jam:')
+plt.figure(figsize=(10,6))
+sns.lineplot(x='hr', y='cnt', data=time_rents, marker="o")
+plt.title('Total Penyewaan Berdasarkan Jam')
+plt.xlabel('Jam')
+plt.ylabel('Jumlah Penyewaan Sepeda')
+plt.xticks(rotation=45)
+st.pyplot()
+
+# Analisis 4: Peminjaman Sepeda Berdasarkan Hari dalam Seminggu
+st.markdown('### Pada hari apa sepeda paling banyak dipinjam?')
+day_rents = hour_df.groupby('weekday')['cnt'].mean().reset_index().sort_values(by='cnt', ascending=False)
+st.write(day_rents)
+
+# Visualisasi
+st.markdown('Visualisasi Penyewaan Berdasarkan Hari:')
+plt.figure(figsize=(10,6))
+sns.barplot(x='weekday', y='cnt', data=day_rents)
+plt.title('Total Penyewaan Berdasarkan Hari')
+plt.xlabel('Hari')
+plt.ylabel('Jumlah Penyewaan Sepeda')
+st.pyplot()
+
+# Analisis 5: Pengaruh Suhu Udara terhadap Peminjaman Sepeda
+st.markdown('### Bagaimana pengaruh suhu udara terhadap jumlah sepeda yang dipinjam?')
+bins = [0, 10, 20, 30, 40]
+labels = ['0-10°C', '11-20°C', '21-30°C', '31-40°C'] 
+hour_df['temp_category'] = pd.cut(hour_df['temp'], bins=bins, labels=labels, include_lowest=True)
+temp_rentals = hour_df.groupby('temp_category')['cnt'].mean().reset_index()
+st.write(temp_rentals)
+
+# Visualisasi
+st.markdown('Visualisasi Penyewaan Berdasarkan Kategori Suhu:')
+plt.figure(figsize=(10,6))
+plt.bar(temp_rentals['temp_category'], temp_rentals['cnt'])
+plt.title('Penyewaan Berdasarkan Suhu')
+plt.xlabel('Kategori Suhu')
+plt.ylabel('Jumlah Penyewaan Sepeda')
+plt.xticks(rotation=45)
+st.pyplot()
+
 # Kesimpulan
 st.markdown('## Kesimpulan')
 st.markdown("""
