@@ -14,8 +14,8 @@ st.markdown('''
 ''')
 
 # Membaca dataset
-df_day = pd.read_csv('day.csv')
-df_hour = pd.read_csv('hour.csv')
+df_day = pd.read_csv('dashboard/day.csv')
+df_hour = pd.read_csv('dashboard/hour.csv')
 
 st.header('Di hari apa pengguna paling sering meminjam sepeda, dan pada hari apa permintaan paling sedikit terjadi?')
 
