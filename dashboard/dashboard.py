@@ -15,8 +15,8 @@ st.markdown('''
 ''')
 
 # Membaca dataset
-df_day = pd.read_csv('day.csv')
-df_hour = pd.read_csv('hour.csv')
+df_day = pd.read_csv('dashboard/day.csv')
+df_hour = pd.read_csv('dashboard/hour.csv')
 
 # Filtering berdasarkan tanggal
 st.sidebar.header("Filter Data")
