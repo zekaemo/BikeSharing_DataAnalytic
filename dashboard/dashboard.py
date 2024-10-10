@@ -11,7 +11,7 @@ st.title('Proyek Analisis Data: Bike Sharing Datasheet')
 st.markdown('''
 *   Nama: Zeka Emo
 *   Email: zeka.emo30@gmail.com
-*   Dicoding ID: zekemo
+*   Dicoding ID: zekaemo
 ''')
 
 # Membaca dataset
