@@ -3,10 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+import numpy as np
 warnings.filterwarnings('ignore')
 
 # Judul aplikasi
-st.title('Proyek Analisis Data: Bike Sharing Datasheet')
+st.title('Proyek Analisis Data: Bike Sharing Dataset')
 
 st.markdown('''
 *   Nama: Zeka Emo
@@ -33,6 +34,10 @@ weather_mapping = {1: 'Cerah', 2: 'Berkabut', 3: 'Hujan Salju Ringan', 4: 'Hujan
 df_day['weathersit'] = df_day['weathersit'].map(weather_mapping)
 weather = st.sidebar.multiselect("Pilih Kondisi Cuaca", options=df_day['weathersit'].unique())
 
+# Normalisasi data temperatur
+df_day['temp'] = (df_day['temp'] * 41).round().astype(int)
+df_hour['temp'] = (df_hour['temp'] * 41).round().astype(int)
+
 # Filtering data berdasarkan musim dan cuaca
 filtered_data_day = df_day.copy()
 if season:
@@ -41,54 +46,82 @@ if season:
 if weather:
     filtered_data_day = filtered_data_day[filtered_data_day['weathersit'].isin(weather)]
 
-# Analisis Berdasarkan Hari
-st.header('Analisis Berdasarkan Hari')
-weekday_mapping = {0: 'Minggu', 1: 'Senin', 2: 'Selasa', 3: 'Rabu', 4: 'Kamis', 5: 'Jumat', 6: 'Sabtu'}
-filtered_data_day['weekday'] = filtered_data_day['weekday'].map(weekday_mapping)
-weekday_rentals = filtered_data_day.groupby('weekday', observed=True)['cnt'].sum().reset_index()
-
-# Visualisasi total penyewaan per hari
-st.subheader('Total Penyewaan Sepeda Berdasarkan Hari')
-fig, ax = plt.subplots()
-sns.barplot(data=weekday_rentals, x='weekday', y='cnt', ax=ax)
-ax.set_xlabel('Hari dalam Seminggu')
-ax.set_ylabel('Total Penyewaan')
+# Pertanyaan 1: Bagaimana cuaca mempengaruhi jumlah peminjaman sepeda?
+st.header('Rata-rata Penyewaan Berdasarkan Kondisi Cuaca')
+weather_rents = df_hour.groupby('weathersit')['cnt'].mean().reset_index()
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.barplot(x='weathersit', y='cnt', data=weather_rents, ax=ax)
+plt.title('Rata-rata Penyewaan Berdasarkan Kondisi Cuaca')
+plt.xlabel('Kondisi Cuaca')
+plt.ylabel('Rata-rata Penyewaan Sepeda')
+plt.xticks(rotation=45)
 st.pyplot(fig)
 
-# Filtering berdasarkan jam
-st.header('Analisis Berdasarkan Jam')
-hourly_rentals = df_hour.groupby('hr')['cnt'].sum().reset_index()
+# Pertanyaan 2: Pada hari liburan, apakah ada kebiasaan yang berbeda dari kategori peminjam jika dibandingkan dengan hari biasa?
+st.header('Pengguna Registered dan Casual Selama Liburan vs Hari Biasa')
 
-# Visualisasi penyewaan sepeda berdasarkan jam
-st.subheader('Total Penyewaan Sepeda Berdasarkan Jam')
+# Menghitung nilai total_registered, total_casual, total_registered_no, total_casual_no
+holiday_data = df_hour[df_hour['holiday'] == 1]
+no_holiday_data = df_hour[df_hour['holiday'] == 0]
+
+total_registered = holiday_data['registered'].mean().round().astype(int)
+total_casual = holiday_data['casual'].mean().round().astype(int)
+total_registered_no = no_holiday_data['registered'].mean().round().astype(int)
+total_casual_no = no_holiday_data['casual'].mean().round().astype(int)
+
+# Menampilkan hasil jumlah pengguna registered dan casual selama liburan dan hari biasa
+categories = ['Liburan', 'Hari Biasa']
+registered_values = [total_registered, total_registered_no]
+casual_values = [total_casual, total_casual_no]
+
+x = np.arange(len(categories))
+width = 0.35
 fig, ax = plt.subplots(figsize=(10, 6))
-sns.lineplot(x='hr', y='cnt', data=hourly_rentals, marker="o", ax=ax)
+ax.bar(x - width/2, registered_values, width, label='Pengguna Terdaftar')
+ax.bar(x + width/2, casual_values, width, label='Pengguna Baru')
+ax.set_xlabel('Kondisi (Liburan vs Hari Biasa)')
+ax.set_ylabel('Rata-rata Pengguna')
+ax.set_title('Rata-rata Pengguna Registered dan Casual Selama Liburan vs Hari Biasa')
+ax.set_xticks(x)
+ax.set_xticklabels(categories)
+ax.legend()
+st.pyplot(fig)
+
+# Pertanyaan 3: Pada sehari, pada pukul berapa sepeda paling banyak dipinjam?
+st.header('Penyewaan Berdasarkan Jam')
+time_rents = df_hour.groupby('hr')['cnt'].mean().reset_index()
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.lineplot(x='hr', y='cnt', data=time_rents, marker="o", ax=ax)
 plt.title('Total Penyewaan Sepeda Berdasarkan Jam')
 plt.xlabel('Jam')
 plt.ylabel('Total Penyewaan Sepeda')
 plt.xticks(rotation=45)
 st.pyplot(fig)
 
-# Visualisasi berdasarkan musim
-st.header('Analisis Berdasarkan Musim')
-season_rentals = filtered_data_day.groupby('season', observed=True)['cnt'].sum().reset_index()
-
+# Pertanyaan 4: Dalam seminggu, hari apa sepeda paling banyak dipinjam?
+st.header('Penyewaan Berdasarkan Hari')
+weekday_mapping = {0: 'Minggu', 1: 'Senin', 2: 'Selasa', 3: 'Rabu', 4: 'Kamis', 5: 'Jumat', 6: 'Sabtu'}
+df_day['weekday'] = df_day['weekday'].map(weekday_mapping)
+day_rents = df_day.groupby('weekday')['cnt'].mean().reset_index()
 fig, ax = plt.subplots(figsize=(10, 6))
-sns.barplot(x='season', y='cnt', data=season_rentals, ax=ax)
-plt.title('Total Penyewaan Sepeda Berdasarkan Musim')
-plt.xlabel('Musim')
+sns.barplot(x='weekday', y='cnt', data=day_rents, ax=ax)
+plt.title('Total Penyewaan Sepeda Berdasarkan Hari')
+plt.xlabel('Hari')
 plt.ylabel('Total Penyewaan Sepeda')
 plt.xticks(rotation=45)
 st.pyplot(fig)
 
-st.header('Analisis Berdasarkan Kondisi Cuaca')
-weather_rentals = filtered_data_day.groupby('weathersit')['cnt'].mean().reset_index()
+# Pertanyaan 5: Bagaimana jumlah sepeda yang dipinjam ketika udara sangat panas atau sangat dingin?
+st.header('Penyewaan Berdasarkan Temperatur')
+bins = [0, 10, 20, 30, 40]
+labels = ['0-10°C', '11-20°C', '21-30°C', '31-40°C']
+df_hour['temp_category'] = pd.cut(df_hour['temp'], bins=bins, labels=labels, include_lowest=True)
+temp_rentals = df_hour.groupby('temp_category')['cnt'].mean().reset_index()
 
-# Visualisasi rata-rata penyewaan sepeda berdasarkan kondisi cuaca
 fig, ax = plt.subplots(figsize=(10, 6))
-sns.barplot(x='weathersit', y='cnt', data=weather_rentals, ax=ax)
-plt.title('Rata-rata Penyewaan Sepeda Berdasarkan Kondisi Cuaca')
-plt.xlabel('Kondisi Cuaca')
+sns.barplot(x='temp_category', y='cnt', data=temp_rentals, ax=ax)
+plt.title('Rata-rata Penyewaan Berdasarkan Kategori Temperatur')
+plt.xlabel('Kategori Temperatur')
 plt.ylabel('Rata-rata Penyewaan Sepeda')
 plt.xticks(rotation=45)
 st.pyplot(fig)
